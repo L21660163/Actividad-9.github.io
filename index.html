@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piedra, Papel o Tijera</title>
+
+    <!-- Enlace a FontAwesome para usar los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* Estilos de los botones */
+        .options button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background-color: #f0f0f0;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+        }
+
+        .options button i {
+            font-size: 50px;
+            margin-bottom: 5px;
+        }
+
+        .options button:hover {
+            background: #74ebd5;
+            color: white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Resultados */
+        .results {
+            margin-top: 30px;
+        }
+
+        .results p {
+            font-size: 20px;
+            color: #444;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Efectos */
+        .results p#resultado {
+            color: #00796b;
+        }
+
+        .computadora {
+            font-size: 50px;
+        }
+
+        /* Estilo del contenedor de resultados */
+        .resultado-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Piedra, Papel o Tijera</h1>
+        <p>Elige tu jugada:</p>
+        <div class="options">
+            <button id="piedra">
+                <i class="fas fa-hand-rock"></i><br>Piedra
+            </button>
+            <button id="papel">
+                <i class="fas fa-hand-paper"></i><br>Papel
+            </button>
+            <button id="tijera">
+                <i class="fas fa-hand-scissors"></i><br>Tijera
+            </button>
+        </div>
+        <div class="results">
+            <div class="resultado-container">
+                <p id="computadora"></p>
+                <p id="resultado"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Opciones disponibles
+        const opciones = ['piedra', 'papel', 'tijera'];
+
+        // Selección de botones
+        const piedraBtn = document.getElementById('piedra');
+        const papelBtn = document.getElementById('papel');
+        const tijeraBtn = document.getElementById('tijera');
+
+        // Elementos para mostrar los resultados
+        const resultadoTexto = document.getElementById('resultado');
+        const computadoraTexto = document.getElementById('computadora');
+
+        // Función para determinar el ganador
+        function determinarGanador(usuario, computadora) {
+            if (usuario === computadora) {
+                return "Empate";
+            } else if (
+                (usuario === 'piedra' && computadora === 'tijera') ||
+                (usuario === 'papel' && computadora === 'piedra') ||
+                (usuario === 'tijera' && computadora === 'papel')
+            ) {
+                return "¡Ganaste!";
+            } else {
+                return "Perdiste";
+            }
+        }
+
+        // Función para jugar
+        function jugar(usuarioEleccion) {
+            const computadoraEleccion = opciones[Math.floor(Math.random() * opciones.length)];
+            const resultado = determinarGanador(usuarioEleccion, computadoraEleccion);
+
+            // Mostrar resultados en pantalla
+            computadoraTexto.innerHTML = `<i class="fas fa-hand-${computadoraEleccion} computadora"></i>`;
+            resultadoTexto.textContent = `La computadora eligió: ${computadoraEleccion.charAt(0).toUpperCase() + computadoraEleccion.slice(1)}. ${resultado}`;
+        }
+
+        // Asignar eventos a los botones
+        piedraBtn.addEventListener('click', () => jugar('piedra'));
+        papelBtn.addEventListener('click', () => jugar('papel'));
+        tijeraBtn.addEventListener('click', () => jugar('tijera'));
+    </script>
+</body>
+</html>
